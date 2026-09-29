@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba Segment Protocols</title>
+
+  <!-- Snippet de Twilio Segment -->
+<script>
+  !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="fWTLMYOF3Yi8cGmd8p1xR88HLPaWTJpu";;analytics.SNIPPET_VERSION="5.2.0";
+  analytics.load("fWTLMYOF3Yi8cGmd8p1xR88HLPaWTJpu");
+  analytics.page();
+  }}();
+</script>
+</head>
+<body>
+  <h1>Entorno de Prueba para Segment Protocols</h1>
+  <p>Abre la consola del navegador o haz clic en los botones para disparar eventos.</p>
+
+  <button id="btn-valid">Enviar Evento Válido</button>
+  <button id="btn-invalid">Enviar Evento Inválido (Violación)</button>
+
+  <script>
+    // Evento 1: Válido según el esquema que configures
+    document.getElementById('btn-valid').addEventListener('click', function() {
+      analytics.track('Product Viewed', {
+        product_id: 'PROD-123',
+        price: 49.99,
+        category: 'Electronics'
+      });
+      console.log('Evento válido disparado');
+    });
+
+    // Evento 2: Diseñado para forzar una violación en Protocols
+    document.getElementById('btn-invalid').addEventListener('click', function() {
+      analytics.track('Product Viewed', {
+        product_id: 12345, // Si esperas un string y envías un número
+        price: "cuarenta y nueve" // Si esperas un número y envías un string
+      });
+      console.log('Evento inválido disparado');
+    });
+  </script>
+</body>
+</html>

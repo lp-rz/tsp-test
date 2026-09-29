@@ -1,44 +1,235 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prueba Segment Protocols</title>
+  <title>Segment Protocols Testing Environment</title>
+  <style>
+    :root {
+      --primary: #52BD94; /* Segment Green */
+      --danger: #D93E3E;
+      --warning: #F5A623;
+      --bg-color: #F4F5F7;
+      --card-bg: #FFFFFF;
+      --text: #333333;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1, h2 { color: #1f2937; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .card { background: var(--card-bg); padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    button {
+      display: block; width: 100%; padding: 10px; margin-bottom: 10px;
+      border: none; border-radius: 4px; cursor: pointer; font-weight: bold; color: white;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+    .btn-valid { background-color: var(--primary); }
+    .btn-invalid { background-color: var(--danger); }
+    .btn-warning { background-color: var(--warning); }
+    .btn-base { background-color: #4A90E2; }
+    #log-container { background: #1f2937; color: #10b981; padding: 15px; border-radius: 8px; font-family: monospace; height: 300px; overflow-y: auto; margin-top: 20px; }
+    .log-entry { margin-bottom: 8px; border-bottom: 1px solid #374151; padding-bottom: 4px; }
+    .log-time { color: #9ca3af; font-size: 0.85em; }
+  </style>
 
-  <!-- Snippet de Twilio Segment -->
-<script>
-  !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="fWTLMYOF3Yi8cGmd8p1xR88HLPaWTJpu";;analytics.SNIPPET_VERSION="5.2.0";
-  analytics.load("fWTLMYOF3Yi8cGmd8p1xR88HLPaWTJpu");
-  analytics.page();
-  }}();
-</script>
+  <!-- TWILIO SEGMENT SNIPPET: Replace YOUR_WRITE_KEY_HERE before deploying -->
+  <script>
+    !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","provide"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.To thoroughly test Twilio Segment Protocols, you need an interface that triggers different data scenarios: valid events, events with missing required properties, type mismatches, unplanned events, and unplanned properties. 
+
+Below is a comprehensive, production-ready HTML template. It includes a mock user interface, standard Segment methods (`identify`, `track`, `page`, `group`), and specific test cases designed to trigger Protocols violations (such as missing traits or schema mismatches). 
+
+Save the following code as your `index.html`. 
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segment Protocols Testing Sandbox</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f5f7; color: #334155; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .section { margin-bottom: 30px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 6px; }
+        .section h2 { margin-top: 0; color: #0f172a; font-size: 1.25rem; }
+        .description { font-size: 0.9rem; color: #64748b; margin-bottom: 15px; }
+        button { background-color: #2563eb; color: white; border: none; padding: 10px 15px; margin: 5px 5px 5px 0; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: background 0.2s; }
+        button:hover { background-color: #1d4ed8; }
+        .btn-violation { background-color: #dc2626; }
+        .btn-violation:hover { background-color: #b91c1c; }
+        .btn-warning { background-color: #d97706; }
+        .btn-warning:hover { background-color: #b45309; }
+        .log-panel { background: #1e293b; color: #10b981; font-family: monospace; padding: 15px; border-radius: 4px; margin-top: 20px; max-height: 200px; overflow-y: auto; }
+    </style>
+
+    <!-- 
+      ====================================================================
+      1. PASTE YOUR SEGMENT ANALYTICS.JS SNIPPET HERE
+      Replace the script tags below with the official snippet from your 
+      Segment workspace (Connections > Sources > JavaScript).
+      ====================================================================
+    -->
+    <script>
+        // Placeholder for the Segment Analytics.js Snippet
+        // E.g., !function(){var analytics=window.analytics=window.analytics||[]; ... }();
+        // analytics.load("YOUR_WRITE_KEY");
+        // analytics.page();
+    </script>
 </head>
 <body>
-  <h1>Entorno de Prueba para Segment Protocols</h1>
-  <p>Abre la consola del navegador o haz clic en los botones para disparar eventos.</p>
 
-  <button id="btn-valid">Enviar Evento Válido</button>
-  <button id="btn-invalid">Enviar Evento Inválido (Violación)</button>
+<div class="container">
+    <h1>Segment Protocols: QA & Testing Hub</h1>
+    <p class="description">Use this sandbox to fire various events and test how Segment Protocols handles valid schemas, type mismatches, missing properties, and unplanned data.</p>
 
-  <script>
-    // Evento 1: Válido según el esquema que configures
-    document.getElementById('btn-valid').addEventListener('click', function() {
-      analytics.track('Product Viewed', {
-        product_id: 'PROD-123',
-        price: 49.99,
-        category: 'Electronics'
-      });
-      console.log('Evento válido disparado');
+    <!-- UI Logger -->
+    <div class="log-panel" id="logger">Awaiting events...</div>
+
+    <!-- SECTION 1: Identity Management -->
+    <div class="section">
+        <h2>1. Identity Management (Identify & Group)</h2>
+        <p class="description">Test user traits validation. Protocols can block or flag identify calls if traits don't match the expected data types.</p>
+        
+        <button id="id-valid">Identify: Valid Traits</button>
+        <button class="btn-violation" id="id-invalid">Identify: Type Violation</button>
+        <button id="group-valid">Group: Associate Company</button>
+    </div>
+
+    <!-- SECTION 2: E-Commerce Tracking (Schema Validation) -->
+    <div class="section">
+        <h2>2. Standard Tracking (E-Commerce)</h2>
+        <p class="description">Test standard events against a Tracking Plan. Ensure required properties exist and adhere to the correct types.</p>
+        
+        <button id="track-valid">Track: Order Completed (Valid)</button>
+        <button class="btn-violation" id="track-missing-prop">Track: Missing Required Prop</button>
+        <button class="btn-violation" id="track-type-mismatch">Track: Property Type Mismatch</button>
+    </div>
+
+    <!-- SECTION 3: Unplanned Data & Filtering -->
+    <div class="section">
+        <h2>3. Unplanned Data & Filtering</h2>
+        <p class="description">Test how Protocols handles data that is not explicitly defined in your Tracking Plan (blocked or forwarded).</p>
+        
+        <button class="btn-warning" id="track-unplanned-event">Track: Unplanned Event</button>
+        <button class="btn-warning" id="track-unplanned-prop">Track: Valid Event + Unplanned Prop</button>
+    </div>
+</div>
+
+<script>
+    // Helper function to update the UI logger
+    function logToUI(message) {
+        const logger = document.getElementById('logger');
+        const timestamp = new Date().toLocaleTimeString();
+        logger.innerHTML = `[${timestamp}] ${message}<br>` + logger.innerHTML;
+        console.log(`[Segment Sandbox] ${message}`);
+    }
+
+    // Ensure analytics exists even if the snippet wasn't pasted properly (prevents JS errors)
+    window.analytics = window.analytics || { track: function(){}, identify: function(){}, group: function(){}, page: function(){} };
+
+    // ==========================================================
+    // 1. IDENTITY MANAGEMENT
+    // ==========================================================
+    
+    document.getElementById('id-valid').addEventListener('click', () => {
+        // VALID: Expected traits match defined schema (e.g., email is string, age is number)
+        analytics.identify('user_123xyz', {
+            email: 'qa-tester@example.com',
+            name: 'Jane Doe',
+            age: 28
+        });
+        logToUI('Fired Identify (Valid Schema)');
     });
 
-    // Evento 2: Diseñado para forzar una violación en Protocols
-    document.getElementById('btn-invalid').addEventListener('click', function() {
-      analytics.track('Product Viewed', {
-        product_id: 12345, // Si esperas un string y envías un número
-        price: "cuarenta y nueve" // Si esperas un número y envías un string
-      });
-      console.log('Evento inválido disparado');
+    document.getElementById('id-invalid').addEventListener('click', () => {
+        // VIOLATION: 'age' is passed as a string instead of a number
+        analytics.identify('user_123xyz', {
+            email: 'qa-tester@example.com',
+            name: 'Jane Doe',
+            age: "twenty-eight" 
+        });
+        logToUI('Fired Identify (Type Violation on "age")');
     });
-  </script>
+
+    document.getElementById('group-valid').addEventListener('click', () => {
+        analytics.group('org_789', {
+            name: 'Acme Corp',
+            industry: 'Technology',
+            employees: 150
+        });
+        logToUI('Fired Group (Acme Corp)');
+    });
+
+    // ==========================================================
+    // 2. E-COMMERCE TRACKING
+    // ==========================================================
+
+    document.getElementById('track-valid').addEventListener('click', () => {
+        // VALID: Follows standard e-commerce schema
+        analytics.track('Order Completed', {
+            order_id: 'order_999',
+            total: 149.99,
+            currency: 'USD',
+            products: [
+                { product_id: 'p_1', price: 100.00 },
+                { product_id: 'p_2', price: 49.99 }
+            ]
+        });
+        logToUI('Fired Track: Order Completed (Valid)');
+    });
+
+    document.getElementById('track-missing-prop').addEventListener('click', () => {
+        // VIOLATION: Missing the 'total' property, which should be required in the Tracking Plan
+        analytics.track('Order Completed', {
+            order_id: 'order_1000',
+            currency: 'USD'
+        });
+        logToUI('Fired Track: Order Completed (Missing Required Property "total")');
+    });
+
+    document.getElementById('track-type-mismatch').addEventListener('click', () => {
+        // VIOLATION: 'total' is sent as a string instead of a float/number
+        analytics.track('Order Completed', {
+            order_id: 'order_1001',
+            total: "149.99", 
+            currency: 'USD'
+        });
+        logToUI('Fired Track: Order Completed (Type Mismatch on "total")');
+    });
+
+    // ==========================================================
+    // 3. UNPLANNED DATA & FILTERING
+    // ==========================================================
+
+    document.getElementById('track-unplanned-event').addEventListener('click', () => {
+        // VIOLATION / FILTERED: This event name does not exist in the Tracking Plan
+        analytics.track('Secret Easter Egg Found', {
+            level: 5,
+            character: 'Mario'
+        });
+        logToUI('Fired Track: Unplanned Event Name');
+    });
+
+    document.getElementById('track-unplanned-prop').addEventListener('click', () => {
+        // VIOLATION / FILTERED: The event is valid, but 'internal_routing_code' is not in the schema
+        analytics.track('Order Completed', {
+            order_id: 'order_1002',
+            total: 50.00,
+            currency: 'USD',
+            internal_routing_code: 'XYZ-999-UNPLANNED' 
+        });
+        logToUI('Fired Track: Order Completed (Valid Event + Unplanned Property)');
+    });
+
+</script>
 </body>
 </html>

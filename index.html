@@ -63,9 +63,9 @@
         <h2>1. Identity Management (Identify & Group)</h2>
         <p class="description">Test user traits validation. Protocols can block or flag identify calls if traits don't match the expected data types.</p>
         
-        <button id="id-valid">Identify: Valid Traits</button>
-        <button class="btn-violation" id="id-invalid">Identify: Type Violation</button>
-        <button id="group-valid">Group: Associate Company</button>
+        <button class="btn-valid" id="id-valid">Identify: Valid Traits</button>
+        <button class="btn-invalid" id="id-invalid">Identify: Type Violation</button>
+        <button class="btn-valid" id="group-valid">Group: Associate Company</button>
     </div>
 
     <!-- SECTION 2: E-Commerce Tracking (Schema Validation) -->
@@ -73,9 +73,9 @@
         <h2>2. Standard Tracking (E-Commerce)</h2>
         <p class="description">Test standard events against a Tracking Plan. Ensure required properties exist and adhere to the correct types.</p>
         
-        <button id="track-valid">Track: Order Completed (Valid)</button>
-        <button class="btn-violation" id="track-missing-prop">Track: Missing Required Prop</button>
-        <button class="btn-violation" id="track-type-mismatch">Track: Property Type Mismatch</button>
+        <button class="btn-valid" id="track-valid">Track: Order Completed (Valid)</button>
+        <button class="btn-invalid" id="track-missing-prop">Track: Missing Required Prop</button>
+        <button class="btn-invalid" id="track-type-mismatch">Track: Property Type Mismatch</button>
     </div>
 
     <!-- SECTION 3: Unplanned Data & Filtering -->
